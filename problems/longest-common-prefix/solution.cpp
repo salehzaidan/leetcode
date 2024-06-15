@@ -1,11 +1,12 @@
 #include <algorithm>
 #include <gtest/gtest.h>
+#include <iterator>
 #include <string>
 #include <vector>
 
 using namespace std;
 
-class Solution {
+class Solution1 {
   public:
     string longestCommonPrefix(vector<string> &strs) {
         auto lcp = strs.front();
@@ -36,26 +37,88 @@ class Solution {
     }
 };
 
-TEST(Solution, LongestCommonPrefix1) {
-    Solution solution;
+TEST(Solution1, LongestCommonPrefix1) {
+    Solution1 solution;
     string expected("fl");
     vector<string> strs{"flower", "flow", "flight"};
     string actual = solution.longestCommonPrefix(strs);
     EXPECT_EQ(expected, actual);
 }
 
-TEST(Solution, LongestCommonPrefix2) {
-    Solution solution;
+TEST(Solution1, LongestCommonPrefix2) {
+    Solution1 solution;
     string expected("");
     vector<string> strs{"dog", "racecar", "car"};
     string actual = solution.longestCommonPrefix(strs);
     EXPECT_EQ(expected, actual);
 }
 
-TEST(Solution, LongestCommonPrefix3) {
-    Solution solution;
+TEST(Solution1, LongestCommonPrefix3) {
+    Solution1 solution;
     string expected("aa");
     vector<string> strs{"aaa", "aa", "aaa"};
+    string actual = solution.longestCommonPrefix(strs);
+    EXPECT_EQ(expected, actual);
+}
+
+class Solution2 {
+  public:
+    string longestCommonPrefix(vector<string> &strs) {
+        string lcp;
+        auto minit = min_element(strs.begin(), strs.end(),
+                                 [](const string &a, const string &b) {
+                                     return a.size() < b.size();
+                                 });
+        for (size_t i = 0; i < minit->size(); i++) {
+            auto mismatch = false;
+            for (size_t j = 0; j < strs.size() - 1; j++) {
+                auto now = strs.at(j);
+                auto next = strs.at(j + 1);
+                if (now.at(i) != next.at(i)) {
+                    mismatch = true;
+                    break;
+                }
+            }
+
+            if (mismatch) {
+                break;
+            }
+
+            lcp = strs.front().substr(0, i + 1);
+        }
+
+        return lcp;
+    }
+};
+
+TEST(Solution2, LongestCommonPrefix1) {
+    Solution2 solution;
+    string expected("fl");
+    vector<string> strs{"flower", "flow", "flight"};
+    string actual = solution.longestCommonPrefix(strs);
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(Solution2, LongestCommonPrefix2) {
+    Solution2 solution;
+    string expected("");
+    vector<string> strs{"dog", "racecar", "car"};
+    string actual = solution.longestCommonPrefix(strs);
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(Solution2, LongestCommonPrefix3) {
+    Solution2 solution;
+    string expected("aa");
+    vector<string> strs{"aaa", "aa", "aaa"};
+    string actual = solution.longestCommonPrefix(strs);
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(Solution2, LongestCommonPrefix4) {
+    Solution2 solution;
+    string expected("");
+    vector<string> strs{"", ""};
     string actual = solution.longestCommonPrefix(strs);
     EXPECT_EQ(expected, actual);
 }
