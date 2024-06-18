@@ -6,7 +6,7 @@ SOURCES := $(wildcard $(PROBLEMS_DIR)/*/$(SOLUTION_FILENAME))
 EXECUTABLES := $(patsubst $(PROBLEMS_DIR)/%/$(SOLUTION_FILENAME),$(BUILD_DIR)/%,$(SOURCES))
 
 CXX := g++
-CXXFLAGS := -std=c++20 -g
+CXXFLAGS := -std=c++20 -g -I./include
 LDLIBS := -lgtest -lgtest_main
 
 all: $(EXECUTABLES)

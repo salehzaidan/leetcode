@@ -1,51 +1,12 @@
 #include <gtest/gtest.h>
-#include <initializer_list>
+
+#include "listnode.hpp"
 
 using namespace std;
 
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
-    ListNode(initializer_list<int> values) : val(0), next(nullptr) {
-        if (values.size() == 0) {
-            return;
-        }
-
-        auto iter = values.begin();
-        val = *iter;
-        ListNode *now = this;
-        iter++;
-
-        while (iter != values.end()) {
-            now->next = new ListNode(*iter);
-            now = now->next;
-            iter++;
-        }
-    }
-
-    string print() {
-        string s;
-        ListNode *now = this;
-
-        while (now != nullptr) {
-            if (now != this) {
-                s += "->";
-            }
-            s += to_string(now->val);
-            now = now->next;
-        }
-
-        return s;
-    }
-};
-
 class Solution {
   public:
-    ListNode *mergeTwoLists(ListNode *list1, ListNode *list2) {
-        auto tmp = new ListNode();
+    ListNode *mergeTwoLists(ListNode *list1, ListNode *list2) { auto tmp = new ListNode();
         auto now = tmp;
 
         while (list1 != nullptr && list2 != nullptr) {
