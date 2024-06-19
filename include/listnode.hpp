@@ -26,7 +26,7 @@ struct ListNode {
         }
     }
 
-    std::string print() {
+    std::string toString() {
         std::string s;
         ListNode *now = this;
 

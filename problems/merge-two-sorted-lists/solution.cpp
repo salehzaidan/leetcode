@@ -35,19 +35,19 @@ TEST(Solution, MergeTwoLists1) {
     ListNode *expected = new ListNode{1, 1, 2, 3, 4, 4};
     ListNode *actual =
         solution.mergeTwoLists(new ListNode{1, 2, 4}, new ListNode{1, 3, 4});
-    EXPECT_EQ(expected->print(), actual->print());
+    EXPECT_EQ(expected->toString(), actual->toString());
 }
 
 TEST(Solution, MergeTwoLists2) {
     Solution solution;
     ListNode *expected = nullptr;
     ListNode *actual = solution.mergeTwoLists(nullptr, nullptr);
-    EXPECT_EQ(expected->print(), actual->print());
+    EXPECT_EQ(expected->toString(), actual->toString());
 }
 
 TEST(Solution, MergeTwoLists3) {
     Solution solution;
     ListNode *expected = new ListNode(0);
     ListNode *actual = solution.mergeTwoLists(nullptr, new ListNode{0});
-    EXPECT_EQ(expected->print(), actual->print());
+    EXPECT_EQ(expected->toString(), actual->toString());
 }
