@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Solution {
+class Solution1 {
   public:
     void merge(vector<int> &nums1, int m, vector<int> &nums2, int n) {
         auto it2 = nums2.begin();
@@ -46,8 +46,8 @@ class Solution {
     }
 };
 
-TEST(Solution, Merge1) {
-    Solution solution;
+TEST(Solution1, Merge1) {
+    Solution1 solution;
     vector<int> nums1{1, 2, 3, 0, 0, 0};
     int m = 3;
     vector<int> nums2{2, 5, 6};
@@ -57,8 +57,8 @@ TEST(Solution, Merge1) {
     EXPECT_EQ(expected, nums1);
 }
 
-TEST(Solution, Merge2) {
-    Solution solution;
+TEST(Solution1, Merge2) {
+    Solution1 solution;
     vector<int> nums1{1};
     int m = 1;
     vector<int> nums2;
@@ -68,8 +68,8 @@ TEST(Solution, Merge2) {
     EXPECT_EQ(expected, nums1);
 }
 
-TEST(Solution, Merge3) {
-    Solution solution;
+TEST(Solution1, Merge3) {
+    Solution1 solution;
     vector<int> nums1{0};
     int m = 0;
     vector<int> nums2{1};
@@ -79,8 +79,8 @@ TEST(Solution, Merge3) {
     EXPECT_EQ(expected, nums1);
 }
 
-TEST(Solution, Merge4) {
-    Solution solution;
+TEST(Solution1, Merge4) {
+    Solution1 solution;
     vector<int> nums1{2, 0};
     int m = 1;
     vector<int> nums2{1};
@@ -90,8 +90,8 @@ TEST(Solution, Merge4) {
     EXPECT_EQ(expected, nums1);
 }
 
-TEST(Solution, Merge5) {
-    Solution solution;
+TEST(Solution1, Merge5) {
+    Solution1 solution;
     vector<int> nums1{4, 5, 6, 0, 0, 0};
     int m = 3;
     vector<int> nums2{1, 2, 3};
@@ -101,8 +101,8 @@ TEST(Solution, Merge5) {
     EXPECT_EQ(expected, nums1);
 }
 
-TEST(Solution, Merge6) {
-    Solution solution;
+TEST(Solution1, Merge6) {
+    Solution1 solution;
     vector<int> nums1{1, 2, 4, 5, 6, 0};
     int m = 5;
     vector<int> nums2{3};
@@ -112,8 +112,8 @@ TEST(Solution, Merge6) {
     EXPECT_EQ(expected, nums1);
 }
 
-TEST(Solution, Merge7) {
-    Solution solution;
+TEST(Solution1, Merge7) {
+    Solution1 solution;
     vector<int> nums1{-1, 0, 0, 3, 3, 3, 0, 0, 0};
     int m = 6;
     vector<int> nums2{1, 2, 2};
@@ -123,8 +123,115 @@ TEST(Solution, Merge7) {
     EXPECT_EQ(expected, nums1);
 }
 
-TEST(Solution, Merge8) {
-    Solution solution;
+TEST(Solution1, Merge8) {
+    Solution1 solution;
+    vector<int> nums1{-1, 0, 1, 1, 0, 0, 0, 0, 0};
+    int m = 4;
+    vector<int> nums2{-1, 0, 2, 2, 3};
+    int n = 5;
+    vector<int> expected{-1, -1, 0, 0, 1, 1, 2, 2, 3};
+    solution.merge(nums1, m, nums2, n);
+    EXPECT_EQ(expected, nums1);
+}
+
+class Solution2 {
+  public:
+    void merge(vector<int> &nums1, int m, vector<int> &nums2, int n) {
+        auto i = nums1.rbegin() + n;
+        auto j = nums2.rbegin();
+        auto k = nums1.rbegin();
+
+        for (auto k = nums1.rbegin(); j != nums2.rend(); k++) {
+            if (i != nums1.rend() && *i > *j) {
+                *k = *i;
+                i++;
+            } else {
+                *k = *j;
+                j++;
+            }
+        }
+    }
+};
+
+TEST(Solution2, Merge1) {
+    Solution2 solution;
+    vector<int> nums1{1, 2, 3, 0, 0, 0};
+    int m = 3;
+    vector<int> nums2{2, 5, 6};
+    int n = 3;
+    vector<int> expected{1, 2, 2, 3, 5, 6};
+    solution.merge(nums1, m, nums2, n);
+    EXPECT_EQ(expected, nums1);
+}
+
+TEST(Solution2, Merge2) {
+    Solution2 solution;
+    vector<int> nums1{1};
+    int m = 1;
+    vector<int> nums2;
+    int n = 0;
+    vector<int> expected{1};
+    solution.merge(nums1, m, nums2, n);
+    EXPECT_EQ(expected, nums1);
+}
+
+TEST(Solution2, Merge3) {
+    Solution2 solution;
+    vector<int> nums1{0};
+    int m = 0;
+    vector<int> nums2{1};
+    int n = 1;
+    vector<int> expected{1};
+    solution.merge(nums1, m, nums2, n);
+    EXPECT_EQ(expected, nums1);
+}
+
+TEST(Solution2, Merge4) {
+    Solution2 solution;
+    vector<int> nums1{2, 0};
+    int m = 1;
+    vector<int> nums2{1};
+    int n = 1;
+    vector<int> expected{1, 2};
+    solution.merge(nums1, m, nums2, n);
+    EXPECT_EQ(expected, nums1);
+}
+
+TEST(Solution2, Merge5) {
+    Solution2 solution;
+    vector<int> nums1{4, 5, 6, 0, 0, 0};
+    int m = 3;
+    vector<int> nums2{1, 2, 3};
+    int n = 3;
+    vector<int> expected{1, 2, 3, 4, 5, 6};
+    solution.merge(nums1, m, nums2, n);
+    EXPECT_EQ(expected, nums1);
+}
+
+TEST(Solution2, Merge6) {
+    Solution2 solution;
+    vector<int> nums1{1, 2, 4, 5, 6, 0};
+    int m = 5;
+    vector<int> nums2{3};
+    int n = 1;
+    vector<int> expected{1, 2, 3, 4, 5, 6};
+    solution.merge(nums1, m, nums2, n);
+    EXPECT_EQ(expected, nums1);
+}
+
+TEST(Solution2, Merge7) {
+    Solution2 solution;
+    vector<int> nums1{-1, 0, 0, 3, 3, 3, 0, 0, 0};
+    int m = 6;
+    vector<int> nums2{1, 2, 2};
+    int n = 3;
+    vector<int> expected{-1, 0, 0, 1, 2, 2, 3, 3, 3};
+    solution.merge(nums1, m, nums2, n);
+    EXPECT_EQ(expected, nums1);
+}
+
+TEST(Solution2, Merge8) {
+    Solution2 solution;
     vector<int> nums1{-1, 0, 1, 1, 0, 0, 0, 0, 0};
     int m = 4;
     vector<int> nums2{-1, 0, 2, 2, 3};
