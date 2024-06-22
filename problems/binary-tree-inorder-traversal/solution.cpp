@@ -34,12 +34,15 @@ class Solution {
 
 TEST(Solution, InorderTraversal1) {
     Solution solution;
-    TreeNode *node = new TreeNode(3);
-    node = new TreeNode(2, node, nullptr);
-    node = new TreeNode(1, nullptr, node);
+    TreeNode *node1 = new TreeNode(3);
+    TreeNode *node2 = new TreeNode(2, node1, nullptr);
+    TreeNode *node3 = new TreeNode(1, nullptr, node2);
     vector<int> expected{1, 3, 2};
-    vector<int> actual = solution.inorderTraversal(node);
+    vector<int> actual = solution.inorderTraversal(node3);
     EXPECT_EQ(expected, actual);
+    delete node1;
+    delete node2;
+    delete node3;
 }
 
 TEST(Solution, InorderTraversal2) {
@@ -56,4 +59,5 @@ TEST(Solution, InorderTraversal3) {
     vector<int> expected{1};
     vector<int> actual = solution.inorderTraversal(node);
     EXPECT_EQ(expected, actual);
+    delete node;
 }
