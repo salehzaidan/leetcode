@@ -7,6 +7,10 @@ using namespace std;
 class Solution1 {
 public:
   bool isAnagram(const string s, const string t) {
+    if (s.length() != t.length()) {
+      return false;
+    }
+
     unordered_map<char, int> freq;
 
     for (const char &c : s) {
