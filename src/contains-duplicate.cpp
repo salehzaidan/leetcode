@@ -22,21 +22,21 @@ public:
   }
 };
 
-TEST(containsDuplicate, testCase1) {
+TEST(Solution1, testCase1) {
   vector<int> nums = {1, 2, 3, 1};
 
   Solution1 solution;
   EXPECT_EQ(solution.containsDuplicate(nums), true);
 }
 
-TEST(containsDuplicate, testCase2) {
+TEST(Solution1, testCase2) {
   vector<int> nums = {1, 2, 3, 4};
 
   Solution1 solution;
   EXPECT_EQ(solution.containsDuplicate(nums), false);
 }
 
-TEST(containsDuplicate, testCase3) {
+TEST(Solution1, testCase3) {
   vector<int> nums = {1, 1, 1, 3, 3, 4, 3, 2, 4, 2};
 
   Solution1 solution;
