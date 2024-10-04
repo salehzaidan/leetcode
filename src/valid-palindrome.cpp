@@ -43,14 +43,20 @@ TEST(Solution1, testCase3) {
 class Solution2 {
 public:
   bool isPalindrome(string s) {
-    transform(s.begin(), s.end(), s.begin(), [](char c) { return tolower(c); });
-    s.erase(remove_if(s.begin(), s.end(), [](char c) { return !isalnum(c); }),
-            s.end());
-
     int left = 0;
     int right = s.length() - 1;
     while (left < right) {
-      if (s[left] != s[right]) {
+      if (!isalnum(s[left])) {
+        left++;
+        continue;
+      }
+
+      if (!isalnum(s[right])) {
+        right--;
+        continue;
+      }
+
+      if (tolower(s[left]) != tolower(s[right])) {
         return false;
       }
 
