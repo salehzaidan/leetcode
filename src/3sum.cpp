@@ -1,8 +1,5 @@
 #include <algorithm>
-#include <functional>
 #include <gtest/gtest.h>
-#include <tuple>
-#include <unordered_set>
 #include <vector>
 
 using namespace std;
@@ -21,24 +18,27 @@ public:
     sort(copy.begin(), copy.end());
 
     vector<vector<int>> triplets;
-    unordered_set<tuple<int, int, int>, TripletHash> used;
 
-    for (int i = 0; i < copy.size() - 1; i++) {
+    for (int i = 0; i < copy.size(); i++) {
+      if (i > 0 && copy[i] == copy[i - 1]) {
+        continue;
+      }
+
       int target = -copy[i];
       int j = i + 1;
       int k = copy.size() - 1;
       while (j < k) {
         int sum = copy[j] + copy[k];
-
         if (sum == target) {
-          auto t = make_tuple(copy[i], copy[j], copy[k]);
-          if (used.count(t) == 0) {
-            used.insert(t);
-            triplets.push_back({copy[i], copy[j], copy[k]});
+          vector<int> triplet = {copy[i], copy[j], copy[k]};
+          triplets.push_back(triplet);
+          while (j < k && copy[j] == triplet[1]) {
+            j++;
           }
-        }
-
-        if (sum < target) {
+          while (j < k && copy[k] == triplet[2]) {
+            k--;
+          }
+        } else if (sum < target) {
           j++;
         } else {
           k--;
@@ -48,16 +48,6 @@ public:
 
     return triplets;
   }
-
-private:
-  struct TripletHash {
-    size_t operator()(const tuple<int, int, int> &t) const {
-      size_t h1 = hash<int>{}(get<0>(t));
-      size_t h2 = hash<int>{}(get<1>(t));
-      size_t h3 = hash<int>{}(get<2>(t));
-      return h1 ^ (h2 << 1) ^ (h3 << 2);
-    }
-  };
 };
 
 TEST(Solution1, testCase1) {
