@@ -7,33 +7,25 @@ using namespace std;
 class Solution1 {
 public:
   int largestRectangleArea(const vector<int> &heights) {
-    struct State {
-      int index;
-      int height;
-    };
-
     int maxArea = 0;
-    stack<State> state;
+    stack<int> indices;
 
-    for (int i = 0; i < heights.size(); i++) {
-      int start = i;
+    for (int i = 0; i <= heights.size(); i++) {
+      int height = i == heights.size() ? 0 : heights[i];
+      while (!indices.empty() && height < heights[indices.top()]) {
+        int j = indices.top();
+        indices.pop();
 
-      while (!state.empty() && state.top().height > heights[i]) {
-        State s = state.top();
-        state.pop();
-        int width = (i - s.index);
-        maxArea = max(maxArea, s.height * width);
-        start = s.index;
+        int width;
+        if (indices.empty()) {
+          width = i;
+        } else {
+          width = i - indices.top() - 1;
+        }
+        maxArea = max(maxArea, width * heights[j]);
       }
 
-      state.push(State{start, heights[i]});
-    }
-
-    while (!state.empty()) {
-      State s = state.top();
-      int width = ((int)heights.size() - s.index);
-      maxArea = max(maxArea, s.height * width);
-      state.pop();
+      indices.push(i);
     }
 
     return maxArea;
