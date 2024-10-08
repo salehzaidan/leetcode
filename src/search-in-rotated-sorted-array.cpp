@@ -21,26 +21,14 @@ public:
 
     int pivot = left;
 
-    int result = binarySearch(nums, 0, pivot - 1, target);
-    if (result != -1) {
-      return result;
-    }
-
-    result = binarySearch(nums, pivot, nums.size() - 1, target);
-    if (result != -1) {
-      return result;
-    }
-
-    return -1;
-  }
-
-private:
-  int binarySearch(const vector<int> &nums, int left, int right, int target) {
+    left = 0;
+    right = nums.size() - 1;
     while (left <= right) {
       int mid = left + (right - left) / 2;
-      if (nums[mid] == target) {
-        return mid;
-      } else if (nums[mid] < target) {
+      int pivotedMid = (mid + pivot) % nums.size();
+      if (nums[pivotedMid] == target) {
+        return pivotedMid;
+      } else if (nums[pivotedMid] < target) {
         left = mid + 1;
       } else {
         right = mid - 1;
