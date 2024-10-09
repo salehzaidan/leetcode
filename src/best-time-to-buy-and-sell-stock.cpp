@@ -11,10 +11,9 @@ public:
     while (right < prices.size()) {
       if (prices[right] < prices[left]) {
         left = right;
-        continue;
+      } else {
+        profit = max(profit, prices[right] - prices[left]);
       }
-
-      profit = max(profit, prices[right] - prices[left]);
       right++;
     }
 
