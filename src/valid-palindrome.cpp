@@ -6,85 +6,87 @@
 using namespace std;
 
 class Solution1 {
-public:
-  bool isPalindrome(string s) {
-    transform(s.begin(), s.end(), s.begin(), [](char c) { return tolower(c); });
-    s.erase(remove_if(s.begin(), s.end(), [](char c) { return !isalnum(c); }),
+  public:
+    bool isPalindrome(string s) {
+        transform(s.begin(), s.end(), s.begin(),
+                  [](char c) { return tolower(c); });
+        s.erase(
+            remove_if(s.begin(), s.end(), [](char c) { return !isalnum(c); }),
             s.end());
 
-    string copy = s;
-    reverse(copy.begin(), copy.end());
+        string copy = s;
+        reverse(copy.begin(), copy.end());
 
-    return s == copy;
-  }
+        return s == copy;
+    }
 };
 
 TEST(Solution1, testCase1) {
-  string s = "A man, a plan, a canal: Panama";
+    string s = "A man, a plan, a canal: Panama";
 
-  Solution1 solution;
-  EXPECT_EQ(solution.isPalindrome(s), true);
+    Solution1 solution;
+    EXPECT_EQ(solution.isPalindrome(s), true);
 }
 
 TEST(Solution1, testCase2) {
-  string s = "raceacar";
+    string s = "raceacar";
 
-  Solution1 solution;
-  EXPECT_EQ(solution.isPalindrome(s), false);
+    Solution1 solution;
+    EXPECT_EQ(solution.isPalindrome(s), false);
 }
 
 TEST(Solution1, testCase3) {
-  string s = " ";
+    string s = " ";
 
-  Solution1 solution;
-  EXPECT_EQ(solution.isPalindrome(s), true);
+    Solution1 solution;
+    EXPECT_EQ(solution.isPalindrome(s), true);
 }
 
 class Solution2 {
-public:
-  bool isPalindrome(string s) {
-    int left = 0;
-    int right = s.length() - 1;
-    while (left < right) {
-      if (!isalnum(s[left])) {
-        left++;
-        continue;
-      }
+  public:
+    bool isPalindrome(string s) {
+        int left = 0;
+        int right = s.length() - 1;
+        while (left < right) {
+            if (!isalnum(s[left])) {
+                left++;
+                continue;
+            }
 
-      if (!isalnum(s[right])) {
-        right--;
-        continue;
-      }
+            if (!isalnum(s[right])) {
+                right--;
+                continue;
+            }
 
-      if (tolower(s[left]) != tolower(s[right])) {
-        return false;
-      }
+            if (tolower(s[left]) != tolower(s[right])) {
+                return false;
+            }
 
-      left++;
-      right--;
+            left++;
+            right--;
+        }
+
+        return true;
     }
-
-    return true;
-  }
 };
 
 TEST(Solution2, testCase1) {
-  string s = "A man, a plan, a canal: Panama";
+    string s = "A man, a plan, a canal: Panama";
 
-  Solution2 solution;
-  EXPECT_EQ(solution.isPalindrome(s), true);
+    Solution2 solution;
+    EXPECT_EQ(solution.isPalindrome(s), true);
 }
 
 TEST(Solution2, testCase2) {
-  string s = "raceacar";
+    string s = "raceacar";
 
-  Solution2 solution;
-  EXPECT_EQ(solution.isPalindrome(s), false);
+    Solution2 solution;
+    EXPECT_EQ(solution.isPalindrome(s), false);
 }
 
 TEST(Solution2, testCase3) {
-  string s = " ";
+    string s = " ";
 
-  Solution2 solution;
-  EXPECT_EQ(solution.isPalindrome(s), true);
+    Solution2 solution;
+    EXPECT_EQ(solution.isPalindrome(s), true);
 }
