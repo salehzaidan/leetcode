@@ -102,3 +102,54 @@ TEST_F(Solution1Test, TestCase3) {
 
     deleteList(actual);
 }
+
+class Solution2 {
+  public:
+    ListNode *reverseList(ListNode *head) { return reverseNode(head, nullptr); }
+
+  private:
+    ListNode *reverseNode(ListNode *current, ListNode *prev) {
+        if (current == nullptr) {
+            return prev;
+        }
+
+        ListNode *next = current->next;
+        current->next = prev;
+        return reverseNode(next, current);
+    }
+};
+
+class Solution2Test : public ::testing::Test {
+  protected:
+    Solution2 solution;
+};
+
+TEST_F(Solution2Test, TestCase1) {
+    ListNode *head = createList({1, 2, 3, 4, 5});
+
+    ListNode *actual = solution.reverseList(head);
+
+    EXPECT_TRUE(compareList(actual, {5, 4, 3, 2, 1}));
+
+    deleteList(actual);
+}
+
+TEST_F(Solution2Test, TestCase2) {
+    ListNode *head = createList({1, 2});
+
+    ListNode *actual = solution.reverseList(head);
+
+    EXPECT_TRUE(compareList(actual, {2, 1}));
+
+    deleteList(actual);
+}
+
+TEST_F(Solution2Test, TestCase3) {
+    ListNode *head = createList({});
+
+    ListNode *actual = solution.reverseList(head);
+
+    EXPECT_TRUE(compareList(actual, {}));
+
+    deleteList(actual);
+}
