@@ -1,54 +1,8 @@
+#include "linked_list_utils.hpp"
 #include <gtest/gtest.h>
-#include <initializer_list>
 
 using namespace std;
-
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
-
-ListNode *createList(initializer_list<int> values) {
-    if (values.size() == 0) {
-        return nullptr;
-    }
-
-    auto it = values.begin();
-    ListNode *head = new ListNode(*it++);
-    ListNode *current = head;
-
-    while (it != values.end()) {
-        current->next = new ListNode(*it++);
-        current = current->next;
-    }
-
-    return head;
-}
-
-void deleteList(ListNode *head) {
-    while (head != nullptr) {
-        ListNode *temp = head;
-        head = head->next;
-        delete temp;
-    }
-}
-
-bool compareList(ListNode *head, initializer_list<int> values) {
-    auto it = values.begin();
-    while (head != nullptr && it != values.end()) {
-        if (head->val != *it) {
-            return false;
-        }
-
-        head = head->next;
-        it++;
-    }
-
-    return head == nullptr && it == values.end();
-}
+using namespace LinkedListUtils;
 
 class Solution1 {
   public:
