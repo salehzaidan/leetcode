@@ -168,3 +168,80 @@ TEST_F(Solution2Test, TestCase4) {
 
     deleteList(actual);
 }
+
+class Solution3 {
+  public:
+    ListNode *removeNthFromEnd(ListNode *head, int n) {
+        ListNode *slow = head;
+        ListNode *fast = head;
+        for (int i = 0; i < n; i++) {
+            fast = fast->next;
+        }
+
+        if (fast == nullptr) {
+            ListNode *temp = head->next;
+            delete head;
+            return temp;
+        }
+
+        while (fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+
+        ListNode *target = slow->next;
+        slow->next = target->next;
+        delete target;
+
+        return head;
+    }
+};
+
+class Solution3Test : public ::testing::Test {
+  protected:
+    Solution3 solution;
+};
+
+TEST_F(Solution3Test, TestCase1) {
+    ListNode *head = createList({1, 2, 3, 4, 5});
+    int n = 2;
+
+    ListNode *actual = solution.removeNthFromEnd(head, n);
+
+    EXPECT_TRUE(compareList(actual, {1, 2, 3, 5}));
+
+    deleteList(actual);
+}
+
+TEST_F(Solution3Test, TestCase2) {
+    ListNode *head = createList({1});
+    int n = 1;
+
+    ListNode *actual = solution.removeNthFromEnd(head, n);
+
+    EXPECT_TRUE(compareList(actual, {}));
+
+    deleteList(actual);
+}
+
+TEST_F(Solution3Test, TestCase3) {
+    ListNode *head = createList({1, 2});
+    int n = 1;
+
+    ListNode *actual = solution.removeNthFromEnd(head, n);
+
+    EXPECT_TRUE(compareList(actual, {1}));
+
+    deleteList(actual);
+}
+
+TEST_F(Solution3Test, TestCase4) {
+    ListNode *head = createList({1, 2});
+    int n = 2;
+
+    ListNode *actual = solution.removeNthFromEnd(head, n);
+
+    EXPECT_TRUE(compareList(actual, {2}));
+
+    deleteList(actual);
+}
