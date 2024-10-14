@@ -30,11 +30,45 @@ inline ListNode *createList(std::initializer_list<int> values) {
     return head;
 }
 
+inline ListNode *createListCycle(std::initializer_list<int> values, int pos) {
+    ListNode *head = createList(values);
+    ListNode *current = head;
+
+    ListNode *cycle = nullptr;
+    int i = 0;
+    while (current->next != nullptr) {
+        if (i == pos) {
+            cycle = current;
+        }
+
+        i++;
+        current = current->next;
+    }
+
+    current->next = cycle;
+    return head;
+}
+
 inline void deleteList(ListNode *head) {
     while (head != nullptr) {
         ListNode *temp = head;
         head = head->next;
         delete temp;
+    }
+}
+
+inline void deleteListCycle(ListNode *head, int pos) {
+    ListNode *cycle = nullptr;
+    int i = 0;
+    while (head != cycle) {
+        if (i == pos) {
+            cycle = head;
+        }
+
+        ListNode *temp = head;
+        head = head->next;
+        delete temp;
+        i++;
     }
 }
 
