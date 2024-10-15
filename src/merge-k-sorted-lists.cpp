@@ -13,9 +13,6 @@ class Solution1 {
         ListNode *current = sentinel;
 
         auto nodesComp = [](const ListNode *a, const ListNode *b) {
-            if (a == nullptr || b == nullptr) {
-                return false;
-            }
             return a->val < b->val;
         };
 
@@ -29,10 +26,6 @@ class Solution1 {
         while (!nodes.empty()) {
             auto it = min_element(nodes.begin(), nodes.end(), nodesComp);
             ListNode *&node = *it;
-            if (node == nullptr) {
-                break;
-            }
-
             current->next = new ListNode(node->val);
             current = current->next;
             node = node->next;
