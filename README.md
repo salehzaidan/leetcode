@@ -6,6 +6,7 @@ My LeetCode solutions.
 
 - Clang 17 (`clang++17`)
 - Google Test (`libgtest-dev`)
+- CMake (`cmake`)
 - GDB (`gdb`) (Optional, for debugging only)
 
 ## Usage
@@ -13,7 +14,7 @@ My LeetCode solutions.
 1. Build all problems:
 
 ```sh
-make
+cmake --build ./build
 ```
 
 2. Run a specific problem:
