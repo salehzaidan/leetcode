@@ -14,6 +14,7 @@ find_package(GTest REQUIRED)
 find_package(Threads REQUIRED)
 
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
+set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(BUILD_DIR ${CMAKE_BINARY_DIR})
 
 file(GLOB SRCS ${SRC_DIR}/*.cpp)
@@ -30,6 +31,24 @@ foreach(SRC_FILE ${SRCS})
     set_target_properties(${TARGET_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR}
     )
+endforeach()
+
+enable_testing()
+file (GLOB TESTS ${TEST_DIR}/*.cpp)
+
+foreach(TEST_FILE ${TESTS})
+    get_filename_component(TARGET_NAME ${TEST_FILE} NAME_WE)
+    add_executable(${TARGET_NAME} ${TEST_FILE})
+    target_link_libraries(${TARGET_NAME} 
+        GTest::GTest 
+        GTest::Main 
+        Threads::Threads
+        -fsanitize=address
+    )
+    set_target_properties(${TARGET_NAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR}
+    )
+    add_test(NAME ${TARGET_NAME} COMMAND ${BUILD_DIR}/${TARGET_NAME})
 endforeach()
 
 add_custom_target(clean-all
