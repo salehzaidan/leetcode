@@ -102,3 +102,75 @@ TEST_F(Solution1Test, TestCase4) {
 
     deleteTree(root);
 }
+
+class Solution2 {
+  public:
+    TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q) {
+        if (root->val > p->val && root->val > q->val) {
+            return lowestCommonAncestor(root->left, p, q);
+        }
+
+        if (root->val < p->val && root->val < q->val) {
+            return lowestCommonAncestor(root->right, p, q);
+        }
+
+        return root;
+    }
+};
+
+class Solution2Test : public ::testing::Test {
+  protected:
+    Solution2 solution;
+};
+
+TEST_F(Solution2Test, TestCase1) {
+    TreeNode *root = createTree({6, 2, 8, 0, 4, 7, 9, nullopt, nullopt, 3, 5});
+    TreeNode *p = root->left;
+    TreeNode *q = root->right;
+
+    TreeNode *actual = solution.lowestCommonAncestor(root, p, q);
+    TreeNode *expected = root;
+
+    EXPECT_EQ(actual, expected);
+
+    deleteTree(root);
+}
+
+TEST_F(Solution2Test, TestCase2) {
+    TreeNode *root = createTree({6, 2, 8, 0, 4, 7, 9, nullopt, nullopt, 3, 5});
+    TreeNode *p = root->left;
+    TreeNode *q = root->left->right;
+
+    TreeNode *actual = solution.lowestCommonAncestor(root, p, q);
+    TreeNode *expected = root->left;
+
+    EXPECT_EQ(actual, expected);
+
+    deleteTree(root);
+}
+
+TEST_F(Solution2Test, TestCase3) {
+    TreeNode *root = createTree({2, 1});
+    TreeNode *p = root;
+    TreeNode *q = root->left;
+
+    TreeNode *actual = solution.lowestCommonAncestor(root, p, q);
+    TreeNode *expected = root;
+
+    EXPECT_EQ(actual, expected);
+
+    deleteTree(root);
+}
+
+TEST_F(Solution2Test, TestCase4) {
+    TreeNode *root = createTree({6, 2, 8, 0, 4, 7, 9, nullopt, nullopt, 3, 5});
+    TreeNode *p = root->left->left;
+    TreeNode *q = root->left->right->right;
+
+    TreeNode *actual = solution.lowestCommonAncestor(root, p, q);
+    TreeNode *expected = root->left;
+
+    EXPECT_EQ(actual, expected);
+
+    deleteTree(root);
+}
