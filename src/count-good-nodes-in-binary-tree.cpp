@@ -115,3 +115,88 @@ TEST_F(Solution1Test, TestCase5) {
 
     deleteTree(root);
 }
+
+class Solution2 {
+  public:
+    int goodNodes(TreeNode *root) {
+        int maximum = numeric_limits<int>::min();
+        int count = 0;
+        traverse(root, maximum, count);
+        return count;
+    }
+
+  private:
+    void traverse(TreeNode *node, int maximum, int &count) {
+        if (node == nullptr) {
+            return;
+        }
+
+        if (node->val >= maximum) {
+            maximum = node->val;
+            count++;
+        }
+
+        traverse(node->left, maximum, count);
+        traverse(node->right, maximum, count);
+    }
+};
+
+class Solution2Test : public ::testing::Test {
+  protected:
+    Solution2 solution;
+};
+
+TEST_F(Solution2Test, TestCase1) {
+    TreeNode *root = createTree({3, 1, 4, 3, nullopt, 1, 5});
+
+    int actual = solution.goodNodes(root);
+    int expected = 4;
+
+    EXPECT_EQ(actual, expected);
+
+    deleteTree(root);
+}
+
+TEST_F(Solution2Test, TestCase2) {
+    TreeNode *root = createTree({3, 3, nullopt, 4, 2});
+
+    int actual = solution.goodNodes(root);
+    int expected = 3;
+
+    EXPECT_EQ(actual, expected);
+
+    deleteTree(root);
+}
+
+TEST_F(Solution2Test, TestCase3) {
+    TreeNode *root = createTree({1});
+
+    int actual = solution.goodNodes(root);
+    int expected = 1;
+
+    EXPECT_EQ(actual, expected);
+
+    deleteTree(root);
+}
+
+TEST_F(Solution2Test, TestCase4) {
+    TreeNode *root = createTree({2, nullopt, 4, 10, 8, nullopt, nullopt, 4});
+
+    int actual = solution.goodNodes(root);
+    int expected = 4;
+
+    EXPECT_EQ(actual, expected);
+
+    deleteTree(root);
+}
+
+TEST_F(Solution2Test, TestCase5) {
+    TreeNode *root = createTree({9, nullopt, 3, 6});
+
+    int actual = solution.goodNodes(root);
+    int expected = 1;
+
+    EXPECT_EQ(actual, expected);
+
+    deleteTree(root);
+}
